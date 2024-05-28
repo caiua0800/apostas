@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar</title>
+
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body id="bodyCadastro">
+
+
+    <div id="cadastroForm">
+        <h1>Cadastre Novos Usuários</h1>
+
+        <div id="inputs-cadastro">
+            <input id="email" type="email" placeholder="email do usuário">
+            <input id="pass1" type="password" placeholder="senha">
+            <input id="pass2" type="password" placeholder="confirme a senha">
+            <button id="cadastrar">cadastrar</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.3/firebase.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBj5INyZny-7ReekJhAkG8XkbwPcschYPg",
+            authDomain: "blazeapostas-10e5e.firebaseapp.com",
+            projectId: "blazeapostas-10e5e",
+            storageBucket: "blazeapostas-10e5e.appspot.com",
+            messagingSenderId: "877925209070",
+            appId: "1:877925209070:web:34fc61cf810d966c0434ff",
+            measurementId: "G-MT0EKXRPGL"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+
+        let auth = firebase.auth();
+
+        document.getElementById('cadastrar').addEventListener('click', () => {
+            const email = document.getElementById('email').value;
+            const pass1 = document.getElementById('pass1').value;
+            const pass2 = document.getElementById('pass2').value;
+    
+            if (email.trim() === '') {
+                alert('Por favor, insira um email válido.');
+                return;
+            }
+    
+            if (pass1.trim() === '') {
+                alert('Por favor, insira uma senha.');
+                return;
+            }
+    
+            if (pass1 !== pass2) {
+                alert('As senhas não correspondem.');
+                return;
+            }
+    
+            auth.createUserWithEmailAndPassword(email, pass1)
+                .then((userCredential) => {
+                    alert('Usuário cadastrado com sucesso!');
+                })
+                .catch((error) => {
+                    // Caso ocorra algum erro durante o cadastro
+                    alert('Erro ao cadastrar usuário: ' + error.message);
+                });
+        });
+    </script>
+    
+</body>
+</html>
